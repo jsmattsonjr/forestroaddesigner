@@ -93,7 +93,7 @@ def check_parameter(self, param, lower_limit, upper_limit):
     if param < lower_limit:
         message += f"el parámetro {param} no puede ser menor que {lower_limit}\n"
     if param > upper_limit:
-        message += f"el parámetro {param} no puede ser mayor que {lower_limit}\n"
+        message += f"el parámetro {param} no puede ser mayor que {upper_limit}\n"
     return message
 
 
