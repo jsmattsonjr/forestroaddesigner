@@ -22,18 +22,20 @@
 """
 
 
-
 from qgis.PyQt.QtWidgets import QMessageBox
 from qgis.core import QgsPoint
 
+
 def check_point_at_dtm(dtm_layer, point):
-    """This function checks if given point as list isn't in dtm layer extension
-    """
+    """This function checks if given point as list isn't in dtm layer extension"""
     if not dtm_layer.extent().contains(QgsPoint(point[0], point[-1])):
-        QMessageBox.warning(None, "ERROR",
-                    "Error: ¡No se admiten puntos fuera de la extensión\n" +
-                    " del Modelo Digital del Terreno!.")
-        return 'out'
-    
+        QMessageBox.warning(
+            None,
+            "ERROR",
+            "Error: ¡No se admiten puntos fuera de la extensión\n"
+            + " del Modelo Digital del Terreno!.",
+        )
+        return "out"
+
     else:
-        return 'in'
+        return "in"

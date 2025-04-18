@@ -47,13 +47,17 @@ import os
 try:
     from . import version
 except ImportError:
+
     class version(object):
         VERSION = "devel"
 
+
 import sys
+
 sys.path.append(os.path.dirname(__file__))
-FORM_CLASS, _ = uic.loadUiType(os.path.join(
-    os.path.dirname(__file__), 'dlgabout.ui'), resource_suffix='')
+FORM_CLASS, _ = uic.loadUiType(
+    os.path.join(os.path.dirname(__file__), "dlgabout.ui"), resource_suffix=""
+)
 
 
 class DlgAbout(QDialog, FORM_CLASS):
@@ -62,17 +66,18 @@ class DlgAbout(QDialog, FORM_CLASS):
         QDialog.__init__(self, parent)
         self.setupUi(self)
 
-        repository_info = ('Code repository: PENDIENTE\nBug Tracker: PENDIENTE')
+        repository_info = "Code repository: PENDIENTE\nBug Tracker: PENDIENTE"
 
-        contact_info = ('Copyright: (C) 2017 by PANOimagen S.L.\nPANOimagen S.L. La Rioja (Spain)\nwww.panoimagen.com')
+        contact_info = "Copyright: (C) 2017 by PANOimagen S.L.\nPANOimagen S.L. La Rioja (Spain)\nwww.panoimagen.com"
 
-        plugin_description = ('This plugin has been funded by the Dirección General de Medio Natural del Gobierno de La Rioja and developed by PANOimagen S.L.\nForest Road Designer serve as support of foresters in the design of forest roads.\nFor more information, please, read metadata/readme and/or contact the author.')
+        plugin_description = "This plugin has been funded by the Dirección General de Medio Natural del Gobierno de La Rioja and developed by PANOimagen S.L.\nForest Road Designer serve as support of foresters in the design of forest roads.\nFor more information, please, read metadata/readme and/or contact the author."
 
-        license_info = 'This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License\nas published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.'
+        license_info = "This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License\nas published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version."
 
         self.codeRepoLabel.setText(repository_info)
         self.contactLabel.setText(contact_info)
         self.descriptionLabel.setText(plugin_description)
         self.licenseLabel.setText(license_info)
-        self.versionLabel.setText('Forest Road Designer version {}'.format(
-                version.VERSION))
+        self.versionLabel.setText(
+            "Forest Road Designer version {}".format(version.VERSION)
+        )

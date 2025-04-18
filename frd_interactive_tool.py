@@ -28,8 +28,8 @@ class FRDInteractiveTool(QgsMapTool):
         super().__init__(canvas)
         self.finder = finder
 
-                # create and setup the rubber band to display the line
-        self.rubberBand = QgsRubberBand(self.canvas(), QgsWkbTypes.LineGeometry)  
+        # create and setup the rubber band to display the line
+        self.rubberBand = QgsRubberBand(self.canvas(), QgsWkbTypes.LineGeometry)
         self.rubberBand.setColor(QColorConstants.Green)
         self.rubberBand.setWidth(1)
         self.start_point = None
@@ -37,101 +37,107 @@ class FRDInteractiveTool(QgsMapTool):
         self.max_dist_m = max_dist_m
         self.goal_result = None
 
-        #our own fancy cursor
-        self.cursor = QCursor(QPixmap(["16 16 3 1",
-                                       "      c None",
-                                       ".     c #FF0000",
-                                       "+     c #faed55",
-                                       "                ",
-                                       "       +.+      ",
-                                       "      ++.++     ",
-                                       "     +.....+    ",
-                                       "    +.  .  .+   ",
-                                       "   +..  .  ..+  ",
-                                       "  +.  . . .  .+ ",
-                                       " ++.    .    .++",
-                                       " ... ...+... ...",
-                                       " ++.    .    .++",
-                                       "  +.  . . .  .+ ",
-                                       "   +..  .  ..+  ",
-                                       "   ++.  .  .+   ",
-                                       "    ++.....+    ",
-                                       "      ++.++     ",
-                                       "       +.+      "]))
-        self.ctrl_cursor = QCursor(QPixmap(["16 16 3 1",
-                                       "      c None",
-                                       ".     c #0000FF",
-                                       "+     c #55edfa",
-                                       "                ",
-                                       "       +.+      ",
-                                       "      ++.++     ",
-                                       "     +.....+    ",
-                                       "    +.  .  .+   ",
-                                       "   +..  .  ..+  ",
-                                       "  +.  . . .  .+ ",
-                                       " ++.    .    .++",
-                                       " ... ...+... ...",
-                                       " ++.    .    .++",
-                                       "  +.  . . .  .+ ",
-                                       "   +..  .  ..+  ",
-                                       "   ++.  .  .+   ",
-                                       "    ++.....+    ",
-                                       "      ++.++     ",
-                                       "       +.+      "]))
+        # our own fancy cursor
+        self.cursor = QCursor(
+            QPixmap(
+                [
+                    "16 16 3 1",
+                    "      c None",
+                    ".     c #FF0000",
+                    "+     c #faed55",
+                    "                ",
+                    "       +.+      ",
+                    "      ++.++     ",
+                    "     +.....+    ",
+                    "    +.  .  .+   ",
+                    "   +..  .  ..+  ",
+                    "  +.  . . .  .+ ",
+                    " ++.    .    .++",
+                    " ... ...+... ...",
+                    " ++.    .    .++",
+                    "  +.  . . .  .+ ",
+                    "   +..  .  ..+  ",
+                    "   ++.  .  .+   ",
+                    "    ++.....+    ",
+                    "      ++.++     ",
+                    "       +.+      ",
+                ]
+            )
+        )
+        self.ctrl_cursor = QCursor(
+            QPixmap(
+                [
+                    "16 16 3 1",
+                    "      c None",
+                    ".     c #0000FF",
+                    "+     c #55edfa",
+                    "                ",
+                    "       +.+      ",
+                    "      ++.++     ",
+                    "     +.....+    ",
+                    "    +.  .  .+   ",
+                    "   +..  .  ..+  ",
+                    "  +.  . . .  .+ ",
+                    " ++.    .    .++",
+                    " ... ...+... ...",
+                    " ++.    .    .++",
+                    "  +.  . . .  .+ ",
+                    "   +..  .  ..+  ",
+                    "   ++.  .  .+   ",
+                    "    ++.....+    ",
+                    "      ++.++     ",
+                    "       +.+      ",
+                ]
+            )
+        )
 
-        
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Control:
             self.mCtrl = True
             self.canvas().setCursor(self.ctrl_cursor)
-
 
     def keyReleaseEvent(self, event):
         if event.key() == Qt.Key_Control:
             self.mCtrl = False
             self.canvas().setCursor(self.cursor)
 
-    #DAVID
+    # DAVID
     def addVertex2(self, pos):
         if self.finder.raw_layer is None:
             return
-        
+
         point = self.toLayerCoordinates(self.finder.raw_layer, pos)
         point_type_list = [point.x(), point.y()]
         try:
             if self.mCtrl:
-                # finder.go_to(point, force_straight=True)            
-                self.finder.add_segment_to(point_type_list, 
-                                           force=True)
+                # finder.go_to(point, force_straight=True)
+                self.finder.add_segment_to(point_type_list, force=True)
             else:
-                # TODO: point coordinates vs pointMap??            
-                self.finder.add_segment_to(point_type_list, 
-                                           max_dist_m = self.max_dist_m)
+                # TODO: point coordinates vs pointMap??
+                self.finder.add_segment_to(point_type_list, max_dist_m=self.max_dist_m)
         except ValueError as e:
-            QMessageBox.warning(None, str('Error'), str(e))
+            QMessageBox.warning(None, str("Error"), str(e))
 
-    
     def addVertex(self, pos):
         if self.finder.raw_layer is None:
             return
-        
+
         point = self.toLayerCoordinates(self.finder.raw_layer, pos)
         point_type_list = [point.x(), point.y()]
         # print(f"MODO INTERACTIVO addVertex {point_type_list}")
         # print(f"MODO INTERACTIVO addVertex {self.finder.parameters}")
         try:
             if self.mCtrl:
-                # finder.go_to(point, force_straight=True)            
-                self.finder.add_segment_to(point_type_list, 
-                                           force=True)
+                # finder.go_to(point, force_straight=True)
+                self.finder.add_segment_to(point_type_list, force=True)
             else:
-                # TODO: point coordinates vs pointMap??            
+                # TODO: point coordinates vs pointMap??
                 self.finder.add_segment_to(point_type_list)
         except ValueError as e:
-            QMessageBox.warning(None, str('Error'), str(e))
+            QMessageBox.warning(None, str("Error"), str(e))
 
     def showLine(self, start, pos):
-        if start is not None:                        
+        if start is not None:
             end = self.toLayerCoordinates(self.finder.raw_layer, pos)
             end_type_list = [end.x(), end.y()]
             goal_result, up_down = self.finder.search_segment_to(end_type_list)
@@ -143,13 +149,13 @@ class FRDInteractiveTool(QgsMapTool):
             else:
                 self.delete_Line()
 
-    def rubberBandColor(self, up_down = True):
+    def rubberBandColor(self, up_down=True):
         if up_down:
             self.rubberBand.setColor(QColorConstants.Green)
         else:
             self.rubberBand.setColor(QColorConstants.Magenta)
 
-    def canvasReleaseEvent(self, event):            
+    def canvasReleaseEvent(self, event):
         if event.button() == Qt.LeftButton:
             modifiers = QApplication.keyboardModifiers()
             if modifiers == Qt.ControlModifier:
@@ -168,21 +174,19 @@ class FRDInteractiveTool(QgsMapTool):
             self.draw_Point()
         try:
             start = self.finder.raw_path_coords_last_point
-            self.showLine( start, event.pos())
+            self.showLine(start, event.pos())
         except:
             print("----------")
             print(f"EXCEPT")
             pass
-        
 
     def canvasMoveEvent(self, event):
         try:
             start = self.finder.raw_path_coords_last_point
         except:
             start = None
-        if start is not None:            
+        if start is not None:
             self.showLine(start, event.pos())
-       
 
     def draw_Point(self):
         self.delete_Points()
@@ -193,14 +197,20 @@ class FRDInteractiveTool(QgsMapTool):
             vertex_marker.setCenter(QgsPointXY(point[0], point[1]))
             vertex_marker.setColor(QColorConstants.Green)
             vertex_marker.setIconSize(7)
-            vertex_marker.setIconType(QgsVertexMarker.ICON_BOX)  # ICON_BOX, ICON_CROSS, ICON_X
+            vertex_marker.setIconType(
+                QgsVertexMarker.ICON_BOX
+            )  # ICON_BOX, ICON_CROSS, ICON_X
             vertex_marker.setPenWidth(2)
             self.start_point = point
         else:
             self.delete_Line()
 
     def delete_Points(self):
-        vertex_items = [ i for i in self.canvas().scene().items() if issubclass(type(i), QgsVertexMarker)]
+        vertex_items = [
+            i
+            for i in self.canvas().scene().items()
+            if issubclass(type(i), QgsVertexMarker)
+        ]
         for ver in vertex_items:
             if ver in self.canvas().scene().items():
                 self.canvas().scene().removeItem(ver)
@@ -216,32 +226,41 @@ class FRDInteractiveTool(QgsMapTool):
             self.rubberBand.reset(QgsWkbTypes.LineGeometry)
         except:
             pass
-    
+
     def delete_Rubberbands(self):
-        rubber_items = [ i for i in self.canvas().scene().items() if issubclass(type(i), QgsRubberBand)]
+        rubber_items = [
+            i
+            for i in self.canvas().scene().items()
+            if issubclass(type(i), QgsRubberBand)
+        ]
         for rub in rubber_items:
             if rub in self.canvas().scene().items():
                 self.canvas().scene().removeItem(rub)
-   
+
     def check_point_pos(self, goal_coords):
-        """Check that the target point is not out of the map and that it does not 
+        """Check that the target point is not out of the map and that it does not
         lie within an exclusion zone."""
 
-        if not self.dtm['layer'].extent().contains(
-                QgsPointXY(goal_coords[0], goal_coords[-1])):
-            print(f'check_point_pos Point at {goal_coords} not in DTM.')
+        if (
+            not self.dtm["layer"]
+            .extent()
+            .contains(QgsPointXY(goal_coords[0], goal_coords[-1]))
+        ):
+            print(f"check_point_pos Point at {goal_coords} not in DTM.")
             self.activate()
 
         if self.exclusion_areas["layer"]:
             if self.optimizer._waypoints_index == []:
-                for elem in self.exclusion_areas[
-                        "layer"].dataProvider().getFeatures():
+                for elem in self.exclusion_areas["layer"].dataProvider().getFeatures():
                     if elem.geometry().contains(
-                            QgsPointXY(goal_coords[0], goal_coords[-1])):
-                        print(f'check_point_pos Point at {goal_coords} lies within the exclusion zone!!!! Avoiding.')
+                        QgsPointXY(goal_coords[0], goal_coords[-1])
+                    ):
+                        print(
+                            f"check_point_pos Point at {goal_coords} lies within the exclusion zone!!!! Avoiding."
+                        )
                         self.activate()
                     else:
-                        print(f'Point at {goal_coords} OK.')
+                        print(f"Point at {goal_coords} OK.")
 
     def getFinder(self):
         return self.finder
@@ -254,8 +273,7 @@ class FRDInteractiveTool(QgsMapTool):
         print("ACTIVATE")
         self._old_cursor = self.canvas().cursor()
         self.canvas().setCursor(self.cursor)
-        # Check whether Geometry is a Line or a Polygon 
-            
+        # Check whether Geometry is a Line or a Polygon
 
     def deactivate(self):
         # self.finder = None
@@ -263,19 +281,15 @@ class FRDInteractiveTool(QgsMapTool):
         self.delete_Line()
         self.canvas().setCursor(self._old_cursor)
         self.finished.emit()
-        
 
     def isZoomTool(self):
         return False
 
-
     def isTransient(self):
         return False
 
-
     def isEditTool(self):
         return True
-
 
     def flags(self):
         return QgsMapTool.EditTool

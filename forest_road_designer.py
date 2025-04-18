@@ -31,11 +31,12 @@ from qgis.core import QgsApplication
 from .processing_provider.provider import Provider
 
 # Initialize Qt resources from file resources.py
-from . import resources   # NOQA
+from . import resources  # NOQA
 
 # Import the code for the DockWidget
 from .forest_road_designer_dockwidget import ForestRoadDesignerDockWidget
 from .dlgabout import DlgAbout
+
 
 class ForestRoadDesigner(object):
     """QGIS Plugin Implementation."""
@@ -55,17 +56,16 @@ class ForestRoadDesigner(object):
         self.plugin_dir = os.path.dirname(__file__)
 
         # initialize locale
-        locale = QSettings().value('locale/userLocale')[0:2]
+        locale = QSettings().value("locale/userLocale")[0:2]
         locale_path = os.path.join(
-            self.plugin_dir,
-            'i18n',
-            'ForestRoadDesigner_{}.qm'.format(locale))
+            self.plugin_dir, "i18n", "ForestRoadDesigner_{}.qm".format(locale)
+        )
 
         if os.path.exists(locale_path):
             self.translator = QTranslator()
             self.translator.load(locale_path)
 
-            if qVersion() > '4.3.3':
+            if qVersion() > "4.3.3":
                 QCoreApplication.installTranslator(self.translator)
 
         # processing provider
@@ -73,14 +73,13 @@ class ForestRoadDesigner(object):
 
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr('&Forest Road Designer')
+        self.menu = self.tr("&Forest Road Designer")
         # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar('ForestRoadDesigner')
-        self.toolbar.setObjectName('ForestRoadDesigner')
+        self.toolbar = self.iface.addToolBar("ForestRoadDesigner")
+        self.toolbar.setObjectName("ForestRoadDesigner")
 
         self.pluginIsActive = False
         self.dockwidget = None
-
 
     # noinspection PyMethodMayBeStatic
     @staticmethod
@@ -96,20 +95,20 @@ class ForestRoadDesigner(object):
         :rtype: QString
         """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
-        return QCoreApplication.translate('ForestRoadDesigner', message)
-
+        return QCoreApplication.translate("ForestRoadDesigner", message)
 
     def add_action(
-            self,
-            icon_path,
-            text,
-            callback,
-            enabled_flag=True,
-            add_to_menu=True,
-            add_to_toolbar=True,
-            status_tip=None,
-            whats_this=None,
-            parent=None):
+        self,
+        icon_path,
+        text,
+        callback,
+        enabled_flag=True,
+        add_to_menu=True,
+        add_to_toolbar=True,
+        status_tip=None,
+        whats_this=None,
+        parent=None,
+    ):
         """Add a toolbar icon to the toolbar.
 
         :param icon_path: Path to the icon for this action. Can be a resource
@@ -154,9 +153,8 @@ class ForestRoadDesigner(object):
         action.triggered.connect(callback)
         action.setEnabled(enabled_flag)
 
-        aboutIcon = QIcon(':/plugins/ForestRoadDesigner/icons/aboutIcon.png')
-        self.actionAbout = QAction(
-                aboutIcon, 'Acerca de', self.iface.mainWindow())
+        aboutIcon = QIcon(":/plugins/ForestRoadDesigner/icons/aboutIcon.png")
+        self.actionAbout = QAction(aboutIcon, "Acerca de", self.iface.mainWindow())
         self.actionAbout.triggered.connect(self.about)
         self.actionAbout.setEnabled(enabled_flag)
 
@@ -178,25 +176,26 @@ class ForestRoadDesigner(object):
 
         return action
 
-
     def initGui(self):
         """Create the menu entries and toolbar icons inside the QGIS GUI."""
 
-        icon_path = ':/plugins/ForestRoadDesigner/icons/icon.png'
+        icon_path = ":/plugins/ForestRoadDesigner/icons/icon.png"
         self.add_action(
             icon_path,
-            text=self.tr('Forest Road Designer'),
+            text=self.tr("Forest Road Designer"),
             callback=self.run,
-            parent=self.iface.mainWindow())
+            parent=self.iface.mainWindow(),
+        )
 
         self.initProcessing()
 
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     def initProcessing(self):
         self.provider = Provider()
         QgsApplication.processingRegistry().addProvider(self.provider)
-    #--------------------------------------------------------------------------
+
+    # --------------------------------------------------------------------------
 
     def onClosePlugin(self):
         """Cleanup necessary items here when plugin dockwidget is closed"""
@@ -212,24 +211,21 @@ class ForestRoadDesigner(object):
 
         self.pluginIsActive = False
 
-
     def unload(self):
         """Removes the plugin menu item and icon from QGIS GUI."""
 
-        #print "** UNLOAD ForestRoadDesigner"
+        # print "** UNLOAD ForestRoadDesigner"
 
         for action in self.actions:
-            self.iface.removePluginMenu(
-                self.tr('&Forest Road Designer'),
-                action)
+            self.iface.removePluginMenu(self.tr("&Forest Road Designer"), action)
             self.iface.removeToolBarIcon(action)
         # remove the toolbar
         del self.toolbar
 
-        #remove processprovider
+        # remove processprovider
         QgsApplication.processingRegistry().removeProvider(self.provider)
 
-    #--------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
     def run(self):
         """Run method that loads and starts the plugin"""
@@ -237,7 +233,7 @@ class ForestRoadDesigner(object):
         if not self.pluginIsActive:
             self.pluginIsActive = True
 
-            #print "** STARTING ForestRoadDesigner"
+            # print "** STARTING ForestRoadDesigner"
 
             # dockwidget may not exist if:
             #    first run of plugin

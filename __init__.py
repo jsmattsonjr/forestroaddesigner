@@ -32,4 +32,5 @@ def classFactory(iface):  # pylint: disable=invalid-name
     """
     #
     from .forest_road_designer import ForestRoadDesigner
+
     return ForestRoadDesigner(iface)
