@@ -81,9 +81,7 @@ class ForestRoadDesigner(object):
         self.pluginIsActive = False
         self.dockwidget = None
 
-    # noinspection PyMethodMayBeStatic
-    @staticmethod
-    def tr(message):
+    def tr(self, message):
         """Get the translation for a string using Qt translation API.
 
         We implement this ourselves since we do not inherit QObject.

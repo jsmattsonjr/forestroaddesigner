@@ -419,7 +419,9 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
                 "activated_road_options"
             ] == self.ckeck_road_options(input_parameters):
 
-                raise QgsProcessingException("Error: ¡Error en las opciones de pista!")
+                raise QgsProcessingException(
+                    self.tr("Error: ¡Error en las opciones de pista!")
+                )
 
             QgsProject.instance().addMapLayer(input_v_layer)
             QgsProject.instance().addMapLayer(input_dtm)
@@ -479,7 +481,7 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
             # case we use the pre-built invalidSinkError method to return a standard
             # helper text for when a sink cannot be evaluated
             if outputFolder is None:
-                raise QgsProcessingException("Error en archivo salida")
+                raise QgsProcessingException(self.tr("Error en archivo salida"))
 
             if feedback.isCanceled():
                 raise Exception("Process cancelled by user")
