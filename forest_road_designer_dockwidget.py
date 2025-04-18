@@ -231,7 +231,9 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         event.accept()
 
     def _initVersion(self):
-        self.frdVersionLabel.setText("Forest Road Designer {}".format(version.VERSION))
+        self.frdVersionLabel.setText(
+            self.tr("Forest Road Designer {}").format(version.VERSION)
+        )
 
     def _initComboBox(self, comboBox, layerType):
         """Init the value of Dtm layer QComboBox with loaded layers in Qgis
@@ -389,7 +391,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         """update suffix of several SpinBoxes"""
         self.penaltyFactorDoubleSpinBox.setSuffix("{}/180º".format(suffix))
         self.slopePenaltyDoubleSpinBox.setSuffix(
-            "{}/cambio máximo pendiente".format(suffix)
+            self.tr("{}/cambio máximo pendiente").format(suffix)
         )
         self.wRoadDoubleSpinBox.setSuffix(" {}".format(suffix))
         self.minRadioDoubleSpinBox.setSuffix(" {}".format(suffix))
@@ -498,7 +500,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         self.startBatchPushButton.setEnabled(active)
         self.batch_processing_status_label.setStyleSheet("color: green")
         if not active:
-            self.batch_processing_status_label.setText("PROCESANDO")
+            self.batch_processing_status_label.setText(self.tr("PROCESANDO"))
         else:
             self.batch_processing_status_label.setText("")
 
@@ -585,10 +587,10 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def chooseOutputFolder(self):
         outputFolder = QtWidgets.QFileDialog.getExistingDirectory(
             self,
-            "Seleccione el directorio de salida",
+            self.tr("Seleccione el directorio de salida"),
             self.outputFolderToolButton.text(),
         )
-        self.outputDirectory = os.path.join(outputFolder, "salidas_FRD")
+        self.outputDirectory = os.path.join(outputFolder, self.tr("salidas_FRD"))
         if not os.path.exists(self.outputDirectory):
             os.makedirs(self.outputDirectory)
         if outputFolder:
@@ -611,7 +613,10 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         )
         if not dtmLayerList:
             self.showMessageBox(
-                "Error: ¡No se ha seleccionado un DTM!\n" + "Por favor seleccione uno."
+                self.tr(
+                    "Error: ¡No se ha seleccionado un DTM!\n"
+                    "Por favor seleccione uno."
+                )
             )
             return False
         if not interactive_mode:
@@ -620,8 +625,10 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             )
             if not waypointsLayerList:
                 self.showMessageBox(
-                    "Error: ¡No se ha seleccionado ninguna capa con"
-                    + " los puntos de paso!\nPor favor seleccione una."
+                    self.tr(
+                        "Error: ¡No se ha seleccionado ninguna capa con"
+                        " los puntos de paso!\nPor favor seleccione una."
+                    )
                 )
                 return False
 
@@ -631,17 +638,21 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             )
             if not exclusionAreasLayerList and self.exclusionAreasCheckBox.isChecked():
                 self.showMessageBox(
-                    "Error: ¡No se ha seleccionado ninguna capa con "
-                    + "las zonas de exclusion para el trazado!\nPor "
-                    + "favor seleccione una o desactive la opción."
+                    self.tr(
+                        "Error: ¡No se ha seleccionado ninguna capa con "
+                        "las zonas de exclusion para el trazado!\nPor "
+                        "favor seleccione una o desactive la opción."
+                    )
                 )
                 return False
 
         if not self.outputFolderLineEdit.text():
 
             self.showMessageBox(
-                "Error: ¡No se ha seleccionado directorio para"
-                + " los resultados!, por favor seleccione uno"
+                self.tr(
+                    "Error: ¡No se ha seleccionado directorio para"
+                    " los resultados!, por favor seleccione uno"
+                )
             )
             return False
 
@@ -662,8 +673,10 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             ):
 
                 self.showMessageBox(
-                    "Error: ¡Error en las opciones de pista!"
-                    + "Por favor revise los valores o desactive la opción"
+                    self.tr(
+                        "Error: ¡Error en las opciones de pista!"
+                        "Por favor revise los valores o desactive la opción"
+                    )
                 )
                 return False
 
@@ -686,7 +699,10 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         )
         if not dtmLayerList:
             self.showMessageBox(
-                "Error: ¡No se ha seleccionado un DTM!\n" + "Por favor seleccione uno."
+                self.tr(
+                    "Error: ¡No se ha seleccionado un DTM!\n"
+                    "Por favor seleccione uno."
+                )
             )
             return False
 
@@ -696,17 +712,21 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             )
             if not exclusionAreasLayerList and self.exclusionAreasCheckBox.isChecked():
                 self.showMessageBox(
-                    "Error: ¡No se ha seleccionado ninguna capa con "
-                    + "las zonas de exclusion para el trazado!\nPor "
-                    + "favor seleccione una o desactive la opción."
+                    self.tr(
+                        "Error: ¡No se ha seleccionado ninguna capa con "
+                        "las zonas de exclusion para el trazado!\nPor "
+                        "favor seleccione una o desactive la opción."
+                    )
                 )
                 return False
 
         if not self.outputFolderLineEdit.text():
 
             self.showMessageBox(
-                "Error: ¡No se ha seleccionado directorio para"
-                + " los resultados!, por favor seleccione uno"
+                self.tr(
+                    "Error: ¡No se ha seleccionado directorio para"
+                    " los resultados!, por favor seleccione uno"
+                )
             )
             return False
 
@@ -798,9 +818,9 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.finder.set_parameters(self.main_parameters())
 
         except ValueError as e:
-            self.showMessageBox(str(e), "Error del optimizador")
+            self.showMessageBox(str(e), self.tr("Error del optimizador"))
             self.showMessageBar(
-                "Forest Road Designer: ha fallado la optimización",
+                self.tr("Forest Road Designer: ha fallado la optimización"),
                 "Error",
                 Qgis.Warning,
             )
@@ -866,10 +886,10 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                     QgsApplication.instance().processEvents()
 
         except ValueError as e:
-            self.showMessageBox(str(e), "Error del optimizador")
+            self.showMessageBox(str(e), self.tr("Error del optimizador"))
 
             self.showMessageBar(
-                "Forest Road Designer: ha fallado la optimización",
+                self.tr("Forest Road Designer: ha fallado la optimización"),
                 "Error",
                 Qgis.Warning,
             )
@@ -898,7 +918,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         )
 
         self.showMessageBar(
-            "Forest Road Designer: Simplificando...", "Info", Qgis.Info, 20
+            self.tr("Forest Road Designer: Simplificando..."), "Info", Qgis.Info, 20
         )
 
         self.output_layer = simplified_layer
@@ -913,7 +933,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         """Launch batch route optimization using vector layer as input.
         Batch processing mode
         """
-        self.showMessageBar("Forest Road Designer: procesando...")
+        self.showMessageBar(self.tr("Forest Road Designer: procesando..."))
         num_options = 1
         params = {}
         msg = ""
@@ -945,7 +965,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                 summary_layer = self.importSimplifiedRouteOptimization()
                 msg = msg + self.create_sumary_message_profile(summary_layer)
 
-            self.profileMensagge("resultado obtenido", summary_layer, msg)
+            self.profileMensagge(self.tr("resultado obtenido"), summary_layer, msg)
             self.updateNonInteractiveDialog(True)
             logger.info("--- NONE INTERACTIVE MODE --- DONE ---")
         except RuntimeError as rte:
@@ -961,21 +981,27 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def startInteractiveRouteOptimization2(self):
         """Launch online/interactive route optimization using mouse input."""
         self.updateAdvancedCheckBox()
-        information_msg = "Modo interactivo"
-        interactive_msg = (
-            "Se aplicarán los valores de los parámetros de diseño avanzados\n"
-            + "Se han desactivado las opciones de radio de giro y desmonte/terraplén\n"
-            + "Para detener el proceso pulse Cancelar. Para continuar pulse Aceptar"
+        information_msg = self.tr("Modo interactivo")
+        interactive_msg = self.tr(
+            (
+                "Se aplicarán los valores de los parámetros de diseño avanzados\n"
+                "Se han desactivado las opciones de radio de giro y desmonte/terraplén\n"
+                "Para detener el proceso pulse Cancelar. Para continuar pulse Aceptar"
+            )
         )
         msg_selection = self.questionMessageBox(interactive_msg, information_msg)
         if not msg_selection == "continue":
             return False
-        self.showMessageBar("Forest Road Designer: entrando en modo interactivo...")
+        self.showMessageBar(
+            self.tr("Forest Road Designer: entrando en modo interactivo...")
+        )
         params = self.main_parameters()
         # if not self.initRouteOptimization(interactive_mode=True):
         if not self.initProfileRouteOptimization(params, interactive_mode=True):
             self.showMessageBar(
-                "No se ha podido iniciar el modo interactivo.", "Error", Qgis.Warning
+                self.tr("No se ha podido iniciar el modo interactivo."),
+                "Error",
+                Qgis.Warning,
             )
             return False
 
@@ -992,14 +1018,17 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def startInteractiveRouteOptimization(self):
         """Launch online/interactive route optimization using mouse input."""
         # self.updateAdvancedCheckBox()
-        # information_msg = "Modo interactivo"
-        # interactive_msg = ('Se aplicarán los valores de los parámetros de diseño avanzados\n' +
-        #                 'Se han desactivado las opciones de radio de giro y desmonte/terraplén\n' +
-        #                 'Para detener el proceso pulse Cancelar. Para continuar pulse Aceptar')
+        # information_msg = self.tr("Modo interactivo")
+        # interactive_msg = self.tr(
+        #     ('Se aplicarán los valores de los parámetros de diseño avanzados\n' +
+        #      'Se han desactivado las opciones de radio de giro y desmonte/terraplén\n' +
+        #      'Para detener el proceso pulse Cancelar. Para continuar pulse Aceptar'))
         # msg_selection = self.questionMessageBox(interactive_msg, information_msg )
         # if not msg_selection == 'continue':
         #     return False
-        self.showMessageBar("Forest Road Designer: entrando en modo interactivo...")
+        self.showMessageBar(
+            self.tr("Forest Road Designer: entrando en modo interactivo...")
+        )
         # params = self.main_parameters()
         # if not self.initRouteOptimization(interactive_mode=True):
         try:
@@ -1007,7 +1036,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             params = self.interactive_main_parameters()
             if not self.initInteractiveRouteOptimization(params, interactive_mode=True):
                 self.showMessageBar(
-                    "No se ha podido iniciar el modo interactivo.",
+                    self.tr("No se ha podido iniciar el modo interactivo."),
                     "Error",
                     Qgis.Warning,
                 )
@@ -1032,7 +1061,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def activateContinue_button(self):
         if self.interactive_mode:
             self.startProcessPushButton.setEnabled(True)
-            self.startProcessPushButton.setText("Continuar Proceso")
+            self.startProcessPushButton.setText(self.tr("Continuar Proceso"))
             self.startProcessPushButton.clicked.disconnect(
                 self.startInteractiveRouteOptimization
             )
@@ -1044,7 +1073,7 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def deactivateContinue_button(self):
         if self.interactive_mode:
 
-            self.startProcessPushButton.setText("Iniciar el proceso de diseño")
+            self.startProcessPushButton.setText(self.tr("Iniciar el proceso de diseño"))
             self.startProcessPushButton.clicked.disconnect(
                 self.continueInteractiveRouteOptimization
             )
@@ -1066,13 +1095,15 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         if self.raw_layer.featureCount() < 1:
 
             msg_selection = self.questionMessageBox(
-                (
-                    "Es necesario dar"
-                    + " al menos dos puntos a la ruta.\nPulse Ok"
-                    + " para seguir añadiendo puntos.\nPulse"
-                    + " Cancel para finalizar"
+                self.tr(
+                    (
+                        "Es necesario dar"
+                        " al menos dos puntos a la ruta.\nPulse Ok"
+                        " para seguir añadiendo puntos.\nPulse"
+                        " Cancel para finalizar"
+                    )
                 ),
-                "Mensaje",
+                self.tr("Mensaje"),
             )
 
             if not msg_selection == "continue":
@@ -1095,13 +1126,15 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def cancelProcess(self):
         msg_selection = self.questionMessageBox(
-            (
-                "Ha pulsado cancelar el proceso.\nSe perderán"
-                + "los datos obtenidos hasta ahora. \nPulse Aceptar"
-                + " para cancelar el proceso.\nPulse"
-                + " Cancelar para continuar"
+            self.tr(
+                (
+                    "Ha pulsado cancelar el proceso.\nSe perderán"
+                    "los datos obtenidos hasta ahora. \nPulse Aceptar"
+                    " para cancelar el proceso.\nPulse"
+                    " Cancelar para continuar"
+                )
             ),
-            "Mensaje",
+            self.tr("Mensaje"),
         )
         if msg_selection == "continue":
             self.remove_empty_raw_layer()
@@ -1124,7 +1157,9 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
                     summary_layer = self.importSimplifiedRouteOptimization()
                     # msg = self.create_sumary_message_profile(summary_layer)
                     msg = self.interactive_create_sumary_message_profile(summary_layer)
-                    self.profileMensagge("modo interactivo", summary_layer, msg)
+                    self.profileMensagge(
+                        self.tr("modo interactivo"), summary_layer, msg
+                    )
                 # self.interactive_mode = False
                 # Enable interface elements
 
@@ -1180,13 +1215,15 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def create_sumary_message(self, summary_dic):
         """Create a message to show the sumay results"""
 
-        msg_gen = """    Distancia origen-destino {:.2f}{}
+        msg_gen = self.tr(
+            """    Distancia origen-destino {:.2f}{}
     Distancia recorrido total {:.2f}{}
     Desnivel neto {:.2f}{}
     Desnivel acumulado {:.2f}{}
     Desnivel medio neto {:.2f}{}
     Desnivel medio acumulado {:.2f}{}
-    Número penalizaciones pendiente {}""".format(
+    Número penalizaciones pendiente {}"""
+        ).format(
             summary_dic["straight_distance"],
             self.dtmMapUnit,
             summary_dic["total_cumsum"],
@@ -1202,19 +1239,17 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             summary_dic["total_slope_pen"],
         )
 
-        msg_radius = (
-            "\n   Número penalizaciones radio {}".format(summary_dic["total_rad_pen"])
-            if self.minRadioDoubleSpinBox.value() > 0
-            else ""
-        )
-
-        msg_cutfill = (
-            "\n   Número penalizaciones desmonte/terraplén {}".format(
-                summary_dic["tota_cutfill_pen"]
+        msg_radius = ""
+        if self.minRadioDoubleSpinBox.value() > 0:
+            msg_radius = self.tr("\n   Número penalizaciones radio {}").format(
+                summary_dic["total_rad_pen"]
             )
-            if self.activateRoadOptionsCheckBox.isChecked()
-            else ""
-        )
+
+        msg_cutfill = ""
+        if self.activateRoadOptionsCheckBox.isChecked():
+            msg_cutfill = self.tr(
+                "\n   Número penalizaciones desmonte/terraplén {}"
+            ).format(summary_dic["tota_cutfill_pen"])
 
         msg = msg_gen + msg_radius + msg_cutfill
 
@@ -1261,9 +1296,9 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.finder.set_parameters(parameters)
 
         except ValueError as e:
-            self.showMessageBox(str(e), "Error del optimizador")
+            self.showMessageBox(str(e), self.tr("Error del optimizador"))
             self.showMessageBar(
-                "Forest Road Designer: ha fallado la optimización",
+                self.tr("Forest Road Designer: ha fallado la optimización"),
                 "Error",
                 Qgis.Warning,
             )
@@ -1315,9 +1350,9 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.finder.set_parameters(parameters)
 
         except ValueError as e:
-            self.showMessageBox(str(e), "Error del optimizador")
+            self.showMessageBox(str(e), self.tr("Error del optimizador"))
             self.showMessageBar(
-                "Forest Road Designer: ha fallado la optimización",
+                self.tr("Forest Road Designer: ha fallado la optimización"),
                 "Error",
                 Qgis.Warning,
             )
@@ -1328,13 +1363,16 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
         self.closeMessageBarWidgets()
         self.showMessageBar(
-            "summary_layer {}".format(summary_layer), "Info", Qgis.Info, 20
+            self.tr("summary_layer {}").format(summary_layer), "Info", Qgis.Info, 20
         )
 
         self.closeMessageBarWidgets()
 
         self.showMessageBar(
-            "Forest Road Designer ha finalizado el proceso", "Info", Qgis.Info, 20
+            self.tr("Forest Road Designer ha finalizado el proceso"),
+            "Info",
+            Qgis.Info,
+            20,
         )
         head_msg = self.head_summary_message(summary_layer)
         # summary_msg = self.create_sumary_message(summary_layer)
@@ -1361,23 +1399,27 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def _show_vehicle_profile_help(self):
         """Create a message to show the vehicle profile parameters"""
-        information_msg = "Parámetros " + self.vehicle_profile_comboBox.currentText()
+        information_msg = self.tr("Parámetros {0}").format(
+            self.vehicle_profile_comboBox.currentText()
+        )
         profile, option = self.set_frd_profile()
         params = self.params_frd_profile(profile, 0)
         semi_s = 2 * params["semi_size"]
-        msg = "Radio mínimo de giro {:.2f}{} \nTamaño mínimo de segmento {}{} \nPendiente mínima {:.2f}% \n\n ".format(
+        msg = self.tr(
+            "Radio mínimo de giro {:.2f}{} \nTamaño mínimo de segmento {}{} \nPendiente mínima {:.2f}% \n\n"
+        ).format(
             params["min_curve_radio_m"],
             self.dtmMapUnit,
             semi_s,
             self.dtmMapUnit,
             params["min_slope_pct"],
         )
-        msg += " Resultado 1\n Pendiente máxima {:.2f}%\n ".format(
+        msg += self.tr(" Resultado 1\n Pendiente máxima {:.2f}%\n").format(
             params["max_slope_pct"]
         )
         for op in range(1, option):
             param = self.params_frd_profile(profile, op)
-            msg += " Resultado {} \nPendiente máxima {:.2f}%\n ".format(
+            msg += self.tr(" Resultado {} \nPendiente máxima {:.2f}%\n").format(
                 op + 1, params["max_slope_pct"]
             )
 
@@ -1386,12 +1428,14 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def _show_slope_direction_profile_help(self):
         """Create a message to show the slope_direction profile parameters"""
-        information_msg = (
-            "Parámetros " + self.slope_direction_profile_comboBox.currentText()
+        information_msg = self.tr("Parámetros {0}").format(
+            self.slope_direction_profile_comboBox.currentText()
         )
         profile, option = self.set_frd_profile()
         params = self.params_frd_profile(profile, 0)
-        msg = "Penalización cambio de dirección {}{}/180º \nPenalización cambio de rasante {}{}/cambio máximo pendiente ".format(
+        msg = self.tr(
+            "Penalización cambio de dirección {}{}/180º \nPenalización cambio de rasante {}{}/cambio máximo pendiente"
+        ).format(
             params["penalty_factor_xy"],
             self.dtmMapUnit,
             params["penalty_factor_z"],
@@ -1403,12 +1447,12 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def _show_penalty_factor_profile_help(self):
         """Create a message to show the penalty_factor profile parameters"""
-        information_msg = (
-            "Parámetros " + self.penalty_factor_profile_label_comboBox.currentText()
+        information_msg = self.tr("Parámetros {0}").format(
+            self.penalty_factor_profile_label_comboBox.currentText()
         )
         profile, option = self.set_frd_profile()
         params = self.params_frd_profile(profile, 0)
-        msg = "Factor de pendiente {} \nFactor de radio {} ".format(
+        msg = self.tr("Factor de pendiente {} \nFactor de radio {}").format(
             params["slope_penalty_factor"], params["radius_penalty_factor"]
         )
 
@@ -1418,14 +1462,16 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def checkStarRadius(self):
         if self.minRadioDoubleSpinBox.value() > self.semiSizeDoubleSpinBox.value():
             msg_selection = self.questionMessageBox(
-                (
-                    "El radio de giro es mayor \n"
-                    + "que la longitud de segmento mínima.\n"
-                    + "Puede producir un resultado de poca utilidad . \nPulse OK"
-                    + " para continuar el proceso.\nPulse"
-                    + " Cancel para finalizar"
+                self.tr(
+                    (
+                        "El radio de giro es mayor \n"
+                        "que la longitud de segmento mínima.\n"
+                        "Puede producir un resultado de poca utilidad . \nPulse OK"
+                        " para continuar el proceso.\nPulse"
+                        " Cancel para finalizar"
+                    )
                 ),
-                "Mensaje",
+                self.tr("Mensaje"),
             )
             if not msg_selection == "continue":
                 self.tabWidget.setCurrentIndex(4)
@@ -1440,8 +1486,10 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def head_summary_message(self, summary_dic):
         """Create a message to show the sumay results"""
 
-        msg_head = """    Distancia origen-destino: {:.2f} {}
-    Desnivel neto: {:.2f} {}""".format(
+        msg_head = self.tr(
+            """    Distancia origen-destino: {:.2f} {}
+    Desnivel neto: {:.2f} {}"""
+        ).format(
             summary_dic["straight_distance"],
             self.dtmMapUnit,
             summary_dic["raw_slope"],
@@ -1453,11 +1501,13 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def create_sumary_message_profile(self, summary_dic):
         """Create a message to show the sumay results"""
 
-        msg_gen = """ 
+        msg_gen = self.tr(
+            """
     Distancia recorrido total: {:.2f} {}
     Desnivel acumulado: {:.2f}{}
     Desnivel acumulado medio: {:.2f} {}
-    Número penalizaciones pendiente: {}""".format(
+    Número penalizaciones pendiente: {}"""
+        ).format(
             summary_dic["total_cumsum"],
             self.dtmMapUnit,
             summary_dic["total_acumulative_slope"],
@@ -1467,25 +1517,23 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             summary_dic["total_slope_pen"],
         )
 
-        msg_radius = (
-            "\n   Número penalizaciones radio: {}".format(summary_dic["total_rad_pen"])
-            if (self.minRadioDoubleSpinBox.value() > 0 or self.basic_mode)
-            else ""
-        )
-
-        msg_cutfill = (
-            "\n   Número penalizaciones desmonte/terraplén: {}".format(
-                summary_dic["tota_cutfill_pen"]
+        msg_radius = ""
+        if self.minRadioDoubleSpinBox.value() > 0 or self.basic_mode:
+            msg_radius = self.tr("\n   Número penalizaciones radio: {}").format(
+                summary_dic["total_rad_pen"]
             )
-            if (self.activateRoadOptionsCheckBox.isChecked() and not self.basic_mode)
-            else ""
-        )
 
-        msg_twist_number = "\n   Número de giros: {}".format(
+        msg_cutfill = ""
+        if self.activateRoadOptionsCheckBox.isChecked() and not self.basic_mode:
+            msg_cutfill = self.tr(
+                "\n   Número penalizaciones desmonte/terraplén: {}"
+            ).format(summary_dic["tota_cutfill_pen"])
+
+        msg_twist_number = self.tr("\n   Número de giros: {}").format(
             summary_dic["twist_number"]
         )
 
-        msg_track_quality = "\n   Indice de calidad de trazado: {:.2f}".format(
+        msg_track_quality = self.tr("\n   Indice de calidad de trazado: {:.2f}").format(
             summary_dic["track_quality"]
         )
 
@@ -1510,11 +1558,13 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def interactive_create_sumary_message_profile(self, summary_dic):
         """Create a message to show the sumay results"""
 
-        msg_gen = """ 
+        msg_gen = self.tr(
+            """
     Distancia recorrido total: {:.2f} {}
     Desnivel acumulado: {:.2f} {}
     Desnivel acumulado medio: {:.2f} {}
-    """.format(
+    """
+        ).format(
             summary_dic["total_cumsum"],
             self.dtmMapUnit,
             summary_dic["total_acumulative_slope"],
@@ -1523,11 +1573,11 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.dtmMapUnit,
         )
 
-        msg_twist_number = "\n   Número de giros: {}".format(
+        msg_twist_number = self.tr("\n   Número de giros: {}").format(
             summary_dic["twist_number"]
         )
 
-        msg_track_quality = "\n   Indice de calidad de trazado: {:.2f}".format(
+        msg_track_quality = self.tr("\n   Indice de calidad de trazado: {:.2f}").format(
             summary_dic["track_quality"]
         )
 

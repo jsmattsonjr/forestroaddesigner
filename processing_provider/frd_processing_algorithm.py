@@ -106,7 +106,7 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
         """
         Returns a translatable string with the self.tr() function.
         """
-        return QCoreApplication.translate("Processing", string)
+        return QCoreApplication.translate("ForestRoadDesigner", string)
 
     def createInstance(self):
         return ForestRoadDesignerProcessingAlgorithm()
@@ -419,7 +419,9 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
                 "activated_road_options"
             ] == self.ckeck_road_options(input_parameters):
 
-                raise QgsProcessingException("Error: ¡Error en las opciones de pista!")
+                raise QgsProcessingException(
+                    self.tr("Error: ¡Error en las opciones de pista!")
+                )
 
             QgsProject.instance().addMapLayer(input_v_layer)
             QgsProject.instance().addMapLayer(input_dtm)
@@ -479,7 +481,7 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
             # case we use the pre-built invalidSinkError method to return a standard
             # helper text for when a sink cannot be evaluated
             if outputFolder is None:
-                raise QgsProcessingException("Error en archivo salida")
+                raise QgsProcessingException(self.tr("Error en archivo salida"))
 
             if feedback.isCanceled():
                 raise Exception("Process cancelled by user")
@@ -578,13 +580,15 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
     def create_sumary_message(self, summary_dic, dtmMapUnit, input_parameters):
         """Create a message to show the sumay results"""
 
-        msg_gen = """    Distancia origen-destino {:.2f}{}
+        msg_gen = self.tr(
+            """    Distancia origen-destino {:.2f}{}
     Distancia recorrido total {:.2f}{}
     Desnivel neto {:.2f}{}
     Desnivel acumulado {:.2f}{}
     Desnivel medio neto {:.2f}{}
     Desnivel medio acumulado {:.2f}{}
-    Número penalizaciones pendiente {}""".format(
+    Número penalizaciones pendiente {}"""
+        ).format(
             summary_dic["straight_distance"],
             dtmMapUnit,
             summary_dic["total_cumsum"],
@@ -600,23 +604,27 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
             summary_dic["total_slope_pen"],
         )
 
-        msg_radius = (
-            "\n   Número penalizaciones radio {}".format(summary_dic["total_rad_pen"])
-            if input_parameters["min_curve_radio_m"] > 0
-            else ""
-        )
-
-        msg_cutfill = (
-            "\n   Número penalizaciones desmonte/terraplén {}".format(
-                summary_dic["tota_cutfill_pen"]
+        msg_radius = ""
+        if input_parameters["min_curve_radio_m"] > 0:
+            msg_radius = self.tr(
+                "\n   Número penalizaciones radio {}".format(
+                    summary_dic["total_rad_pen"]
+                )
             )
-            if input_parameters["activated_road_options"]
-            else ""
+
+        msg_cutfill = ""
+        if input_parameters["activated_road_options"]:
+            msg_cutfill = self.tr(
+                "\n   Número penalizaciones desmonte/terraplén {}".format(
+                    summary_dic["tota_cutfill_pen"]
+                )
+            )
+
+        msg_twist_number = self_tr("\n   Número de giros {}").format(
+            summary_dic["twist_number"]
         )
 
-        msg_twist_number = "\n   Número de giros {}".format(summary_dic["twist_number"])
-
-        msg_track_quality = "\n   Indice de calidad de trazado {:.2f}".format(
+        msg_track_quality = self.tr("\n   Indice de calidad de trazado {:.2f}").format(
             summary_dic["track_quality"]
         )
 

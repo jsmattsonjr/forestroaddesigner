@@ -49,6 +49,13 @@ param = ""
 INPUT_PARAMETER_ERROR = f"Error: El parámetro {param} es incorrecto"
 
 
+def tr(self, string):
+    """
+    Returns a translatable string with the self.tr() function.
+    """
+    return QCoreApplication.translate("ForestRoadDesigner", string)
+
+
 def ckeck_road_options(self, parameters):
     """check if there are values  for road options"""
     check = False
@@ -61,7 +68,7 @@ def ckeck_road_options(self, parameters):
     ):
         check = True
     if parameters["activated_road_options"] == check:
-        message = ROAD_OPTIONS_ERROR
+        message = self.tr(ROAD_OPTIONS_ERROR)
         return False, message
     else:
         return True, ""
@@ -91,11 +98,11 @@ def check_parameter(self, param, lower_limit, upper_limit):
     """Check that parameter in into de value limits. Retur a message"""
     message = ""
     if param < lower_limit:
-        message += "el parámetro {1} no puede ser menor que {2}\n".format(
+        message += self.tr("el parámetro {0} no puede ser menor que {1}\n").format(
             param, lower_limit
         )
     if param > upper_limit:
-        message += "el parámetro {1} no puede ser mayor que {2}\n".format(
+        message += self.tr("el parámetro {0} no puede ser mayor que {1}\n").format(
             param, upper_limit
         )
     return message
@@ -104,13 +111,15 @@ def check_parameter(self, param, lower_limit, upper_limit):
 def create_sumary_message(self, summary_dic, dtmMapUnit, input_parameters):
     """Create a message to show the sumay results"""
 
-    msg_gen = """    Distancia origen-destino {:.2f}{}
+    msg_gen = self.tr(
+        """    Distancia origen-destino {:.2f}{}
     Distancia recorrido total {:.2f}{}
     Desnivel neto {:.2f}{}
     Desnivel acumulado {:.2f}{}
     Desnivel medio neto {:.2f}{}
     Desnivel medio acumulado {:.2f}{}
-    Número penalizaciones pendiente {}""".format(
+    Número penalizaciones pendiente {}"""
+    ).format(
         summary_dic["straight_distance"],
         dtmMapUnit,
         summary_dic["total_cumsum"],
@@ -126,19 +135,17 @@ def create_sumary_message(self, summary_dic, dtmMapUnit, input_parameters):
         summary_dic["total_slope_pen"],
     )
 
-    msg_radius = (
-        "\n   Número penalizaciones radio {}".format(summary_dic["total_rad_pen"])
-        if input_parameters["min_curve_radio_m"] > 0
-        else ""
-    )
-
-    msg_cutfill = (
-        "\n   Número penalizaciones desmonte/terraplén {}".format(
-            summary_dic["tota_cutfill_pen"]
+    msg_radius = ""
+    if input_parameters["min_curve_radio_m"] > 0:
+        msg_radius = self.tr("\n   Número penalizaciones radio {}").format(
+            summary_dic["total_rad_pen"]
         )
-        if input_parameters["activated_road_options"]
-        else ""
-    )
+
+    msg_cutfill = ""
+    if input_parameters["activated_road_options"]:
+        msg_cutfill = self.tr(
+            "\n   Número penalizaciones desmonte/terraplén {}"
+        ).format(summary_dic["tota_cutfill_pen"])
 
     msg = msg_gen + msg_radius + msg_cutfill
 

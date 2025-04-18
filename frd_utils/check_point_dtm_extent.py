@@ -22,8 +22,14 @@
 """
 
 
+from qgis.PyQt.QtCore import QCoreApplication
 from qgis.PyQt.QtWidgets import QMessageBox
 from qgis.core import QgsPoint
+
+
+def tr(text):
+    """Helper function for translation"""
+    return QCoreApplication.translate("ForestRoadDesigner", text)
 
 
 def check_point_at_dtm(dtm_layer, point):
@@ -32,8 +38,10 @@ def check_point_at_dtm(dtm_layer, point):
         QMessageBox.warning(
             None,
             "ERROR",
-            "Error: ¡No se admiten puntos fuera de la extensión\n"
-            + " del Modelo Digital del Terreno!.",
+            tr(
+                "Error: ¡No se admiten puntos fuera de la extensión\n"
+                " del Modelo Digital del Terreno!."
+            ),
         )
         return "out"
 
