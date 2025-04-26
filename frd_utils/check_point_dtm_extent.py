@@ -39,8 +39,8 @@ def check_point_at_dtm(dtm_layer, point):
             None,
             "ERROR",
             tr(
-                "Error: ¡No se admiten puntos fuera de la extensión\n"
-                " del Modelo Digital del Terreno!."
+                "Error: ¡No se admiten puntos fuera de la extensión"
+                " del Modelo Digital del Terreno!"
             ),
         )
         return "out"
