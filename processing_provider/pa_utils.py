@@ -91,9 +91,13 @@ def check_parameter(self, param, lower_limit, upper_limit):
     """Check that parameter in into de value limits. Retur a message"""
     message = ""
     if param < lower_limit:
-        message += f"el parámetro {param} no puede ser menor que {lower_limit}\n"
+        message += "el parámetro {1} no puede ser menor que {2}\n".format(
+            param, lower_limit
+        )
     if param > upper_limit:
-        message += f"el parámetro {param} no puede ser mayor que {upper_limit}\n"
+        message += "el parámetro {1} no puede ser mayor que {2}\n".format(
+            param, upper_limit
+        )
     return message
 
 
