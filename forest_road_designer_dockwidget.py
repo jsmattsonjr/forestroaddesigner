@@ -1203,15 +1203,13 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         )
 
         msg_radius = (
-            """\n   Número penalizaciones radio {}""".format(
-                summary_dic["total_rad_pen"]
-            )
+            "\n   Número penalizaciones radio {}".format(summary_dic["total_rad_pen"])
             if self.minRadioDoubleSpinBox.value() > 0
             else ""
         )
 
         msg_cutfill = (
-            """\n   Número penalizaciones desmonte/terraplén {}""".format(
+            "\n   Número penalizaciones desmonte/terraplén {}".format(
                 summary_dic["tota_cutfill_pen"]
             )
             if self.activateRoadOptionsCheckBox.isChecked()
@@ -1363,25 +1361,23 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
 
     def _show_vehicle_profile_help(self):
         """Create a message to show the vehicle profile parameters"""
-        information_msg = (
-            """Parámetros """ + self.vehicle_profile_comboBox.currentText()
-        )
+        information_msg = "Parámetros " + self.vehicle_profile_comboBox.currentText()
         profile, option = self.set_frd_profile()
         params = self.params_frd_profile(profile, 0)
         semi_s = 2 * params["semi_size"]
-        msg = """Radio mínimo de giro {:.2f}{} \nTamaño mínimo de segmento {}{} \nPendiente mínima {:.2f}% \n\n """.format(
+        msg = "Radio mínimo de giro {:.2f}{} \nTamaño mínimo de segmento {}{} \nPendiente mínima {:.2f}% \n\n ".format(
             params["min_curve_radio_m"],
             self.dtmMapUnit,
             semi_s,
             self.dtmMapUnit,
             params["min_slope_pct"],
         )
-        msg += """ Resultado 1\n Pendiente máxima {:.2f}%\n """.format(
+        msg += " Resultado 1\n Pendiente máxima {:.2f}%\n ".format(
             params["max_slope_pct"]
         )
         for op in range(1, option):
             param = self.params_frd_profile(profile, op)
-            msg += """ Resultado {} \nPendiente máxima {:.2f}%\n """.format(
+            msg += " Resultado {} \nPendiente máxima {:.2f}%\n ".format(
                 op + 1, params["max_slope_pct"]
             )
 
@@ -1391,11 +1387,11 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def _show_slope_direction_profile_help(self):
         """Create a message to show the slope_direction profile parameters"""
         information_msg = (
-            """Parámetros """ + self.slope_direction_profile_comboBox.currentText()
+            "Parámetros " + self.slope_direction_profile_comboBox.currentText()
         )
         profile, option = self.set_frd_profile()
         params = self.params_frd_profile(profile, 0)
-        msg = """Penalización cambio de dirección {}{}/180º \nPenalización cambio de rasante {}{}/cambio máximo pendiente """.format(
+        msg = "Penalización cambio de dirección {}{}/180º \nPenalización cambio de rasante {}{}/cambio máximo pendiente ".format(
             params["penalty_factor_xy"],
             self.dtmMapUnit,
             params["penalty_factor_z"],
@@ -1408,11 +1404,11 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
     def _show_penalty_factor_profile_help(self):
         """Create a message to show the penalty_factor profile parameters"""
         information_msg = (
-            """Parámetros """ + self.penalty_factor_profile_label_comboBox.currentText()
+            "Parámetros " + self.penalty_factor_profile_label_comboBox.currentText()
         )
         profile, option = self.set_frd_profile()
         params = self.params_frd_profile(profile, 0)
-        msg = """Factor de pendiente {} \nFactor de radio {} """.format(
+        msg = "Factor de pendiente {} \nFactor de radio {} ".format(
             params["slope_penalty_factor"], params["radius_penalty_factor"]
         )
 
@@ -1472,26 +1468,24 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
         )
 
         msg_radius = (
-            """\n   Número penalizaciones radio: {}""".format(
-                summary_dic["total_rad_pen"]
-            )
+            "\n   Número penalizaciones radio: {}".format(summary_dic["total_rad_pen"])
             if (self.minRadioDoubleSpinBox.value() > 0 or self.basic_mode)
             else ""
         )
 
         msg_cutfill = (
-            """\n   Número penalizaciones desmonte/terraplén: {}""".format(
+            "\n   Número penalizaciones desmonte/terraplén: {}".format(
                 summary_dic["tota_cutfill_pen"]
             )
             if (self.activateRoadOptionsCheckBox.isChecked() and not self.basic_mode)
             else ""
         )
 
-        msg_twist_number = """\n   Número de giros: {}""".format(
+        msg_twist_number = "\n   Número de giros: {}".format(
             summary_dic["twist_number"]
         )
 
-        msg_track_quality = """\n   Indice de calidad de trazado: {:.2f}""".format(
+        msg_track_quality = "\n   Indice de calidad de trazado: {:.2f}".format(
             summary_dic["track_quality"]
         )
 
@@ -1529,11 +1523,11 @@ class ForestRoadDesignerDockWidget(QtWidgets.QDockWidget, FORM_CLASS):
             self.dtmMapUnit,
         )
 
-        msg_twist_number = """\n   Número de giros: {}""".format(
+        msg_twist_number = "\n   Número de giros: {}".format(
             summary_dic["twist_number"]
         )
 
-        msg_track_quality = """\n   Indice de calidad de trazado: {:.2f}""".format(
+        msg_track_quality = "\n   Indice de calidad de trazado: {:.2f}".format(
             summary_dic["track_quality"]
         )
 

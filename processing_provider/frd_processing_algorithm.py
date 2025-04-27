@@ -601,26 +601,22 @@ class ForestRoadDesignerProcessingAlgorithm(QgsProcessingAlgorithm):
         )
 
         msg_radius = (
-            """\n   Número penalizaciones radio {}""".format(
-                summary_dic["total_rad_pen"]
-            )
+            "\n   Número penalizaciones radio {}".format(summary_dic["total_rad_pen"])
             if input_parameters["min_curve_radio_m"] > 0
             else ""
         )
 
         msg_cutfill = (
-            """\n   Número penalizaciones desmonte/terraplén {}""".format(
+            "\n   Número penalizaciones desmonte/terraplén {}".format(
                 summary_dic["tota_cutfill_pen"]
             )
             if input_parameters["activated_road_options"]
             else ""
         )
 
-        msg_twist_number = """\n   Número de giros {}""".format(
-            summary_dic["twist_number"]
-        )
+        msg_twist_number = "\n   Número de giros {}".format(summary_dic["twist_number"])
 
-        msg_track_quality = """\n   Indice de calidad de trazado {:.2f}""".format(
+        msg_track_quality = "\n   Indice de calidad de trazado {:.2f}".format(
             summary_dic["track_quality"]
         )
 
